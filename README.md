@@ -50,4 +50,4 @@ src/
 ## İletişim
 
 Mehmet Sinan Yılmaz  
-E-posta: mehmetsinan.yilmaz@mail.ohu.edu.tr
+E-posta: info@chelfor.net
