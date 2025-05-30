@@ -5,31 +5,28 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertEquals;
-
 public class PostExampleTest {
 
     @Test
-    public void testPostRequest() {
-        RestAssured.baseURI = "https://jsonplaceholder.typicode.com";
+    public void testPhpPostWithUserInfo() {
+        RestAssured.baseURI = "https://api.chelfor.net";
 
-        String requestBody = "{ \"title\": \"foo\", \"body\": \"bar\", \"userId\": 1 }";
+        String jsonPayload = "{\n" +
+                "    \"name\": \"Mehmet Yılmaz\",\n" +
+                "    \"email\": \"mehmet@example.com\",\n" +
+                "    \"username\": \"mehmety\",\n" +
+                "    \"password\": \"gizli123\",\n" +
+                "    \"role\": \"admin\",\n" +
+                "    \"created_at\": \"2025-05-30T14:00:00+03:00\"\n" +
+                "}";
 
         Response response = RestAssured.given()
                 .contentType(ContentType.JSON)
-                .body(requestBody)
+                .body(jsonPayload)
             .when()
-                .post("/posts");
+                .post("/yazilimtest/test-api.php");
 
-        // Konsola detaylı bilgi yazdır
-        System.out.println("Status Code: " + response.getStatusCode());
-        System.out.println("Response Body:\n" + response.getBody().asPrettyString());
-
-        // Başarı kontrolü
-        assertEquals("Status code should be 201", 201, response.getStatusCode());
-        assertEquals("Title should be 'foo'", "foo", response.jsonPath().getString("title"));
-        assertEquals("Body should be 'bar'", "bar", response.jsonPath().getString("body"));
-        assertEquals("userId should be 1", 1, (int) response.jsonPath().getInt("userId"));
+        System.out.println("Durum Kodu: " + response.getStatusCode());
+        System.out.println("Yanıt:\n" + response.getBody().asPrettyString());
     }
 }
